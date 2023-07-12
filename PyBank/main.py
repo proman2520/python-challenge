@@ -7,7 +7,9 @@ with open("./PyBank/Resources/budget_data.csv", 'r') as file:
     budget_array = []
     header_row = []
     net_total = 0
+    total_change = 0
     avg_change = 0
+    initial_profit = 0
     max_profits = ["", 0]
     max_losses = ["", 0]
 
@@ -27,22 +29,31 @@ with open("./PyBank/Resources/budget_data.csv", 'r') as file:
         c += 1
 
     #The changes in "Profit/Losses" over the entire period, and then the average of those changes
-    avg_change = round(((int(budget_array[-1][1]) - int(budget_array[0][1])) / len(budget_array)), 2)
+    initial_profit = int(budget_array[0][1])
+    c = 0
+    for each in budget_array:
+        if c == 0:
+            total_change = int(budget_array[c][1]) - initial_profit
+        else:
+            total_change = total_change + (int(budget_array[c][1]) - int(budget_array[c-1][1]))
+        c += 1
+
+    avg_change = round(total_change / (len(budget_array) - 1), 2)
 
     #The greatest increase in profits (date and amount) over the entire period
     c = 0
     for each in budget_array:
-        if int(budget_array[c][1]) > int(max_profits[1]):
+        if (int(budget_array[c][1])-int(budget_array[c-1][1])) > int(max_profits[1]):
             max_profits[0] = budget_array[c][0]
-            max_profits[1] = budget_array[c][1]
+            max_profits[1] = int(budget_array[c][1])-int(budget_array[c-1][1])
         c += 1
 
     #The greatest decrease in profits (date and amount) over the entire period
     c = 0
     for each in budget_array:
-        if int(budget_array[c][1]) < int(max_losses[1]):
+        if (int(budget_array[c][1])-int(budget_array[c-1][1])) < int(max_losses[1]):
             max_losses[0] = budget_array[c][0]
-            max_losses[1] = budget_array[c][1]
+            max_losses[1] = int(budget_array[c][1])-int(budget_array[c-1][1])
         c += 1
 
     #RESULTS
@@ -51,7 +62,7 @@ with open("./PyBank/Resources/budget_data.csv", 'r') as file:
     print("--------------------------------------------------")
     print(f"Total months: {len(budget_array)}")
     print(f"Total: ${net_total}")
-    print(f"Average Change: ${avg_change}")
+    print(f"Average Change: ${avg_change}") #WRONG ANSWER
     print(f"Greatest Increase in Profits: {max_profits[0]} (${max_profits[1]})")
     print(f"Greatest Decrease in Profits: {max_losses[0]} (${max_losses[1]})")
 
