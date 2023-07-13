@@ -62,9 +62,23 @@ with open("./PyBank/Resources/budget_data.csv", 'r') as file:
     print("--------------------------------------------------")
     print(f"Total months: {len(budget_array)}")
     print(f"Total: ${net_total}")
-    print(f"Average Change: ${avg_change}") #WRONG ANSWER
+    print(f"Average Change: ${avg_change}")
     print(f"Greatest Increase in Profits: {max_profits[0]} (${max_profits[1]})")
     print(f"Greatest Decrease in Profits: {max_losses[0]} (${max_losses[1]})")
 
 #In addition, your final script should both print the analysis to the terminal and export a text file with the results. (NO IDEA)
+    results = ["","Financial Analysis",\
+               "--------------------------------------------------",\
+               f"Total months: {len(budget_array)}",\
+               f"Total: ${net_total}",\
+               f"Average Change: ${avg_change}",\
+               f"Greatest Increase in Profits: {max_profits[0]} (${max_profits[1]})",\
+               f"Greatest Decrease in Profits: {max_losses[0]} (${max_losses[1]})",\
+               "--------------------------------------------------"]
     
+    with open("./PyBank/analysis/results.txt", 'w') as file:
+        for line in results:
+            file.write(line)
+            file.write("\n")
+
+#Code end, remember to update README.

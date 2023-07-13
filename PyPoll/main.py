@@ -69,3 +69,17 @@ with open("./PyPoll/Resources/election_data.csv", 'r') as file:
     print("------------------------------------")
 
 #In addition, your final script should both print the analysis to the terminal and export a text file with the results. (NO IDEA)
+    results = ["","Election Results","------------------------------------",\
+               f"Total votes: {total_votes}","------------------------------------",\
+               f"Charles Casper Stockham: {Stockham_share}% ({Stockham_votes})",\
+                f"Diana DeGette: {DeGette_share}% ({DeGette_votes})"\
+                f"Raymon Anthony Doane: {Doane_share}% ({Doane_votes})","------------------------------------",\
+                f"Election winner: {election_winner.upper()}",\
+                 "------------------------------------"]
+
+    with open("./PyPoll/analysis/results.txt", 'w') as file:
+        for line in results:
+            file.write(line)
+            file.write("\n")
+
+#Code end, remember to update README.
